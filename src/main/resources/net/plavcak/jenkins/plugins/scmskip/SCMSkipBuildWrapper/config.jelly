@@ -3,6 +3,9 @@
     <f:entry title="Delete Build" field="deleteBuild" description="Delete skipped build after completion.">
         <f:checkbox />
     </f:entry>
+    <f:entry title="Head Only" field="headOnly" description="Only inspect the head commit.">
+        <f:checkbox />
+    </f:entry>
     <f:advanced>
         <f:entry title="Pattern" field="skipPattern" description="Override default skip pattern. Must be a valid regex expression">
             <f:textbox />
