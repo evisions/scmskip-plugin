@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 public class SCMSkipMatcher {
 
     private Pattern pattern;
+    private boolean headOnly = false;
 
     public SCMSkipMatcher(String pattern) {
         setPattern(pattern);
@@ -32,5 +33,13 @@ public class SCMSkipMatcher {
             regex = SCMSkipConstants.DEFAULT_PATTERN;
         }
         this.pattern = Pattern.compile(regex, Pattern.DOTALL);
+    }
+
+    public boolean getHeadOnly() {
+        return headOnly;
+    }
+
+    public void setHeadOnly(boolean headOnly) {
+        this.headOnly = headOnly;
     }
 }

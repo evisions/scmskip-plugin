@@ -25,15 +25,18 @@ public class SCMSkipBuildWrapper extends BuildWrapper {
     private SCMSkipMatcher skipMatcher;
     private boolean deleteBuild;
     private String skipPattern;
+    private boolean headOnly;
 
     @DataBoundConstructor
-    public SCMSkipBuildWrapper(boolean deleteBuild, String skipPattern) {
+    public SCMSkipBuildWrapper(boolean deleteBuild, String skipPattern, boolean headOnly) {
         this.deleteBuild = deleteBuild;
         this.skipPattern = skipPattern;
         if (this.skipPattern == null) {
             this.skipPattern = SCMSkipConstants.DEFAULT_PATTERN;
         }
+        this.headOnly = headOnly;
         this.skipMatcher = new SCMSkipMatcher(getSkipPattern());
+        this.skipMatcher.setHeadOnly(isHeadOnly());
     }
 
     public boolean isDeleteBuild() {
@@ -56,6 +59,15 @@ public class SCMSkipBuildWrapper extends BuildWrapper {
     public void setSkipPattern(String skipPattern) {
         this.skipPattern = skipPattern;
         this.skipMatcher.setPattern(this.skipPattern);
+    }
+
+    public boolean isHeadOnly() {
+        return headOnly;
+    }
+
+    @DataBoundSetter
+    public void setHeadOnly(boolean headOnly) {
+        this.headOnly = headOnly;
     }
 
     @Override

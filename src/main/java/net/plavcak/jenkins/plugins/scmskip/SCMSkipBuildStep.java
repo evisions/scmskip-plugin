@@ -28,19 +28,22 @@ public class SCMSkipBuildStep extends Builder implements SimpleBuildStep {
     private SCMSkipMatcher skipMatcher;
     private boolean deleteBuild;
     private String skipPattern;
+    private boolean headOnly;
 
-    public SCMSkipBuildStep(boolean deleteBuild, String skipPattern) {
+    public SCMSkipBuildStep(boolean deleteBuild, String skipPattern, boolean headOnly) {
         this.deleteBuild = deleteBuild;
         this.skipPattern = skipPattern;
         if (this.skipPattern == null) {
             this.skipPattern = SCMSkipConstants.DEFAULT_PATTERN;
         }
+        this.headOnly = headOnly;
         this.skipMatcher = new SCMSkipMatcher(getSkipPattern());
+        this.skipMatcher.setHeadOnly(isHeadOnly());
     }
 
     @DataBoundConstructor
     public SCMSkipBuildStep() {
-        this(false, null);
+        this(false, null, false);
     }
 
     public boolean isDeleteBuild() {
@@ -63,6 +66,15 @@ public class SCMSkipBuildStep extends Builder implements SimpleBuildStep {
     public void setSkipPattern(String skipPattern) {
         this.skipPattern = skipPattern;
         this.skipMatcher.setPattern(this.skipPattern);
+    }
+
+    public boolean isHeadOnly() {
+        return headOnly;
+    }
+
+    @DataBoundSetter
+    public void setHeadOnly(boolean headOnly) {
+        this.headOnly = headOnly;
     }
 
     @Override
