@@ -92,18 +92,36 @@ public class SCMSkipTools {
         }
 
         ChangeLogSet.Entry matchedEntry = null;
+        ChangeLogSet.Entry lastEntry = null;
+        boolean headOnly = matcher.getHeadOnly();
 
         for (Object entry : changeLogSet.getItems()) {
+            if (headOnly) {
+                if (entry instanceof ChangeLogSet.Entry) {
+                    lastEntry = (Entry) entry;
+                }
+                continue;
+            }
             if (entry instanceof ChangeLogSet.Entry && inspectChangeSetEntry((Entry) entry, matcher)) {
                 matchedEntry = (Entry) entry;
                 break;
             }
         }
 
-        String commitMessage  = combineChangeLogMessages(changeLogSet);
+        String commitMessage;
+
+        if (headOnly && lastEntry != null) {
+            if (lastEntry instanceof ChangeLogSet.Entry && inspectChangeSetEntry(lastEntry, matcher)) {
+                matchedEntry = lastEntry;
+            }
+            commitMessage = lastEntry.getMsg();
+        }
+        else {
+            commitMessage = combineChangeLogMessages(changeLogSet);
+        }
 
         if (matchedEntry == null) {
-            logger.println("SCM Skip: Pattern "
+            logger.println("SCM Skip: headOnly = " + String.valueOf(headOnly) + ", Pattern "
                     + matcher.getPattern().pattern()
                     + " NOT matched on message: "
                     + commitMessage);
@@ -114,7 +132,7 @@ public class SCMSkipTools {
                         + commitMessage);
             }
         } else {
-            logger.println("SCM Skip: Pattern "
+            logger.println("SCM Skip: headOnly = " + String.valueOf(headOnly) + ", Pattern "
                 + matcher.getPattern().pattern()
                 + " matched on message: "
                 + commitMessage);
