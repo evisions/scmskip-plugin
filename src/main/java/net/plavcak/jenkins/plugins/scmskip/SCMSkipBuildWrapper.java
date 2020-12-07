@@ -57,8 +57,10 @@ public class SCMSkipBuildWrapper extends BuildWrapper {
 
     @DataBoundSetter
     public void setSkipPattern(String skipPattern) {
+        if (skipPattern.equals(getDescriptor().getSkipPattern()))
+            skipPattern = null;
         this.skipPattern = skipPattern;
-        this.skipMatcher.setPattern(this.skipPattern);
+        this.skipMatcher.setPattern(getSkipPattern());
     }
 
     public boolean isHeadOnly() {
