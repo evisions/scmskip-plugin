@@ -56,7 +56,7 @@ public class SCMSkipBuildStep extends Builder implements SimpleBuildStep {
     }
 
     public String getSkipPattern() {
-        if (this.skipPattern == null) {
+        if (this.skipPattern == null || this.skipPattern.isEmpty()) {
             return getDescriptor().getSkipPattern();
         }
         return skipPattern;
