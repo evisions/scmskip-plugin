@@ -25,7 +25,7 @@ public class SCMSkipBuildStep extends Builder implements SimpleBuildStep {
 
     private static final Logger LOGGER = Logger.getLogger(SCMSkipBuildStep.class.getName());
 
-    private SCMSkipMatcher skipMatcher;
+    private transient SCMSkipMatcher skipMatcher;
     private boolean deleteBuild;
     private String skipPattern;
     private boolean headOnly;

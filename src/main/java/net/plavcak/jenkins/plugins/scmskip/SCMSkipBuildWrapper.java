@@ -22,7 +22,7 @@ public class SCMSkipBuildWrapper extends BuildWrapper {
 
     private static final Logger LOGGER = Logger.getLogger(SCMSkipBuildWrapper.class.getName());
 
-    private SCMSkipMatcher skipMatcher;
+    private transient SCMSkipMatcher skipMatcher;
     private boolean deleteBuild;
     private String skipPattern;
     private boolean headOnly;
