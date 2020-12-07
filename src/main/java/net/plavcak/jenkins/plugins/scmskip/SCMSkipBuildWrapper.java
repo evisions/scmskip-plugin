@@ -31,9 +31,9 @@ public class SCMSkipBuildWrapper extends BuildWrapper {
     public SCMSkipBuildWrapper(boolean deleteBuild, String skipPattern, boolean headOnly) {
         this.deleteBuild = deleteBuild;
         this.skipPattern = skipPattern;
-        if (this.skipPattern == null) {
-            this.skipPattern = SCMSkipConstants.DEFAULT_PATTERN;
-        }
+        // if (this.skipPattern == null) {
+        //     this.skipPattern = SCMSkipConstants.DEFAULT_PATTERN;
+        // }
         this.headOnly = headOnly;
         this.skipMatcher = new SCMSkipMatcher(getSkipPattern());
         this.skipMatcher.setHeadOnly(isHeadOnly());
